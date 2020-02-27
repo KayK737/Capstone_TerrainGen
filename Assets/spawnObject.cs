@@ -6,57 +6,53 @@ public class spawnObject : MonoBehaviour
 {
     public Vector3 center;
     public Vector3 size;
+    Vector3 pos;
     public GameObject pinePrefab;
     public GameObject spookyPrefab;
     public GameObject usualPrefab;
+    public GameObject firstPerson;
+    public int spawnAmount;
+
+    
     public float x;
     public float y;
     public float z;
+    public int random;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        SpawnPine();
-    }
+  void Start()
+  {
+      spawnAmount = Random.Range(10, 50);
+      while (spawnAmount > 0)
 
-    // Update is called once per frame
+          x = Random.Range(-40f, 175f);
+          y = 20;
+          z = Random.Range(-40f, 175f);
+          center = new Vector3(x, y, z);
+          pos = center + new Vector3(size.x + x, size.y + y, size.z + z);
+          SpawnTree();
+          spawnAmount--;
+         
+        }
+
+     
     void Update()
     {
         if (Input.GetKey(KeyCode.Q))
         {
+            pos = firstPerson.transform.position;
+            SpawnTree();
             
-            SpawnPine();
-            SpawnSpooky();
-            SpawnUsual();
-
         }
     }
-    public void SpawnPine()
-    {
-     x = Random.Range(-200f, 200f);
-     y = Random.Range(0f, 05f);
-     z = Random.Range(-200f, 200f);
-    center = new Vector3(x, y, z);
-        Vector3 pos = center + new Vector3(Random.Range(-size.x / 2 , size.x /2), y, Random.Range(-size.z / 2, size.z / 2));
-        Instantiate(pinePrefab, pos, Quaternion.identity);
+    public void SpawnTree()
+    {       
+       
+        random = Random.Range(0,10);
+        if(random > 7) Instantiate(pinePrefab, pos, Quaternion.identity);
+        else if(random <= 6 || random > 4) Instantiate(spookyPrefab, pos, Quaternion.identity);
+        else if(random < 4) Instantiate(usualPrefab, pos, Quaternion.identity);
+ 
     }
-    public void SpawnSpooky()
-    {
-        x = Random.Range(-200f, 200f);
-        y = Random.Range(0f, 05f);
-        z = Random.Range(-200f, 200f);
-        center = new Vector3(x, y, z);
-        Vector3 pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), y, Random.Range(-size.z / 2, size.z / 2));
-        Instantiate(spookyPrefab, pos, Quaternion.identity);
-    }
-    public void SpawnUsual()
-    {
-        x = Random.Range(-200f, 200f);
-        y = Random.Range(0f, 05f);
-        z = Random.Range(-200f, 200f);
-        center = new Vector3(x, y, z);
-        Vector3 pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), y, Random.Range(-size.z / 2, size.z / 2));
-        Instantiate(usualPrefab, pos, Quaternion.identity);
-    }
+
 
 }

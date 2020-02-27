@@ -10,14 +10,16 @@ public class landGeneration : MonoBehaviour
     public float scale = 20;
     public float offsetX = 100f;
     public float offsetY = 100f;
+    Vector3 pos = new Vector3(-20, 25, -120);
 
+    public GameObject terrainPrefab;
     void Start()
     {
         offsetX = Random.Range(0f, 9999f);
         offsetY = Random.Range(0f, 9999f);
         scale = Random.Range(3f, 10f);
         depth = Random.Range(1f, 50f);
-
+        Instantiate(terrainPrefab, pos, Quaternion.identity);
     }
 
     void Update()
